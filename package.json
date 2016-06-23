@@ -1,5 +1,5 @@
 {
-  "name": "react-redux-starter",
+  "name": "facebook-google-login-react",
   "version": "1.0.0",
   "babel": {
     "presets": [
@@ -8,7 +8,7 @@
       "stage-1"
     ]
   },
-  "description": "React-Redux starter kit",
+  "description": "Facebook and Google login with React.js",
   "main": "index.js",
   "repository": "git@github.com:weiyuan1993/react-redux-starter.git",
   "scripts": {
