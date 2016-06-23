@@ -5,8 +5,8 @@ export default class App extends Component {
   render() {
     return (
       <div>
-      <LoginView fb={FB} />
-      <div>{this.props.children}</div>
+        <h1>React 登入</h1>
+        <div>{this.props.children}</div>
       </div>
     );
   }

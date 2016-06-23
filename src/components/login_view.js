@@ -6,10 +6,16 @@ class LoginView extends Component {
   render(){
     return(
       <div>
-        <h1>Facebook Login</h1>
-        <FbLogin fb={this.props.fb} />
-        <h1>Google+ Login</h1>
-        <GoogleLogin />
+        <div className="col-md-6">
+          <h3>JOIN US NOW</h3>
+        </div>
+        <div className="col-md-6">
+          <h3>Facebook Login</h3>
+          <FbLogin fb={this.props.route.fb} />
+          <h3>Google+ Login</h3>
+          <GoogleLogin />
+        </div>
+
       </div>
     );
   }

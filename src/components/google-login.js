@@ -9,14 +9,13 @@ class GoogleLogin extends Component {
        GOOGLEpicture:'',
     };
     this.renderGoogleLoginButton=this.renderGoogleLoginButton.bind(this);
+  
   }
   componentDidMount(){
     //google載入後觸發render GOOGLE login button
     window.addEventListener('google-loaded',this.renderGoogleLoginButton);
   }
   renderGoogleLoginButton(){
-    console.log("rendered the google button")
-    var self = this;
     const onSignIn= (googleUser)=> {
       var profile = googleUser.getBasicProfile();
       // console.log('[Google+]ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -24,11 +23,11 @@ class GoogleLogin extends Component {
       // console.log('[Google+]Image URL: ' + profile.getImageUrl());
       // console.log('[Google+]Email: ' + profile.getEmail());
       this.setState(
-        {
-          'GOOGLEmessage':'Welcome '+profile.getName(),
-          'GOOGLEemail':'Email:'+profile.getEmail(),
-          'GOOGLEpicture':profile.getImageUrl()
-        });
+      {
+        'GOOGLEmessage':'Welcome '+profile.getName(),
+        'GOOGLEemail':'Email:'+profile.getEmail(),
+        'GOOGLEpicture':profile.getImageUrl()
+      });
 
     }
     gapi.signin2.render('googleSignIn', {
@@ -51,6 +50,7 @@ class GoogleLogin extends Component {
         'GOOGLEemail':'',
         'GOOGLEpicture':''
     });
+
   }
   render(){
     return(
