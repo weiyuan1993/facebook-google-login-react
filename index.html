@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Facebook/Google Login JavaScript Example</title>
+    <meta name="google-signin-client_id" content="15476904734-3jadkq5suq8d6oh2csg3u1ediklf24eh.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div class="container"></div>
+  </body>
+  <script type="text/javascript" src="http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=153010411778212"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://apis.google.com/js/platform.js?onload=triggerGoogleLoaded" async defer></script>
+  <script type="text/javascript">
+    function triggerGoogleLoaded() {
+      window.dispatchEvent(new Event('google-loaded'));
+    }
+  </script>
+  <script src="/bundle.js"></script>
+</html>
