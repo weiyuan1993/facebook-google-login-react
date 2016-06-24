@@ -8,7 +8,6 @@ class LoginView extends Component {
   render(){
     return(
       <div>
-      TEST
         <h1>Login</h1>
         <div className="col-md-6">
           <Link to="sign-up" className="btn btn-success">JOIN US NOW</Link>
