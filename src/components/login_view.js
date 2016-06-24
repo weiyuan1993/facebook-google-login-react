@@ -18,7 +18,6 @@ class LoginView extends Component {
           <h3>Google+ Login</h3>
           <GoogleLogin />
         </div>
-
       </div>
     );
   }

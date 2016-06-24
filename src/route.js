@@ -19,8 +19,6 @@ const Page3 = () => {
   return <div>I'm page Three.</div>
 }
 
-
-
 export default(
   <Route path="/" component={App} >
     <IndexRoute component={LoginView} fb={FB} />
