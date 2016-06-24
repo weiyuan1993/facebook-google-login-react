@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { fbLogIn, getFBName } from '../actions/index';
+
 class FbLogin extends Component {
   constructor(props){
     super(props);
@@ -9,7 +12,6 @@ class FbLogin extends Component {
        FBemail:'',
        FBcover:''
      };
-
   }
   //component 生成前
   componentWillMount(){
@@ -50,9 +52,14 @@ class FbLogin extends Component {
   //當登入狀態改變
   onStatusChange(response) {
     console.log('[FB]' ,response );
+
     let self = this;
     if( response.status === "connected" ) {
+      const isLogIn = true;
+      this.props.fbLogIn(isLogIn);
+
       this.FB.api('/me', function(response) {
+        self.props.getFBName("Welcome " + response.name);
         let message = "Welcome " + response.name;
           self.setState({
             FBmessage: message
@@ -124,17 +131,31 @@ class FbLogin extends Component {
         <br/>
         <button className="btn btn-primary" onClick={()=>{this.facebookLogin()}}>Facebook Login</button>
         <p>{this.state.FBmessage}</p>
+        <p>{this.props.fbName}</p>
         <img src={this.state.FBpicture} />
         <p>{this.state.FBemail}</p>
         <img src={this.state.FBcover} />
         <button className="btn btn-primary" onClick={()=>{this.getEmail()}}>Get email</button>
         <button className="btn btn-primary" onClick={()=>{this.getCover()}}>Get Cover</button>
         <button className="btn btn-danger"  onClick={()=>{this.logOut()}}>Log Out</button>
-
+        <br/>
+        Redux:
+        <br/>
+        facebook is login:
+        {this.props.fbIsLogIn}
+        <br/>
+        Name:
+        {this.props.fbName}
       </div>
     );
   }
 
 }
-
-export default FbLogin;
+function mapStateToProps(state){ //存取rootReducer回傳的state
+  return {
+    fbIsLogIn:state.FB.isLogIn,
+    fbName:state.FB.fbName,
+    fbEmail:state.FB.fbEmail
+   };
+}
+export default connect(mapStateToProps, { fbLogIn,getFBName })(FbLogin);
