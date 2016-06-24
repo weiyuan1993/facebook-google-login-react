@@ -7,13 +7,21 @@ class GoogleLogin extends Component {
        GOOGLEmessage:'未登入',
        GOOGLEemail:'',
        GOOGLEpicture:'',
+       isFirstEnter:true
     };
     this.renderGoogleLoginButton=this.renderGoogleLoginButton.bind(this);
-  
+
   }
   componentDidMount(){
+    console.log(this.state.isFirstEnter);
+    if(this.state.isFirstEnter==false){
+        this.renderGoogleLoginButton();
+    }
+    //triggerGoogleLoaded();
     //google載入後觸發render GOOGLE login button
     window.addEventListener('google-loaded',this.renderGoogleLoginButton);
+
+
   }
   renderGoogleLoginButton(){
     const onSignIn= (googleUser)=> {
@@ -26,7 +34,8 @@ class GoogleLogin extends Component {
       {
         'GOOGLEmessage':'Welcome '+profile.getName(),
         'GOOGLEemail':'Email:'+profile.getEmail(),
-        'GOOGLEpicture':profile.getImageUrl()
+        'GOOGLEpicture':profile.getImageUrl(),
+        'isFirstEnter':false
       });
 
     }
@@ -55,7 +64,7 @@ class GoogleLogin extends Component {
   render(){
     return(
       <div>
-        <div id="googleSignIn" data-onsuccess={()=>{this.onSignIn()}}></div>
+        <div id="googleSignIn"></div>
         <button className="btn btn-default" onClick={()=>{this.signOut()}}>Sign out</button>
         <p>{this.state.GOOGLEmessage}</p>
         <p>{this.state.GOOGLEemail}</p>

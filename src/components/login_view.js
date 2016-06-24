@@ -1,4 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router';
+
 import FbLogin from './fb-login';
 import GoogleLogin from './google-login';
 
@@ -6,8 +8,10 @@ class LoginView extends Component {
   render(){
     return(
       <div>
+      TEST
+        <h1>Login</h1>
         <div className="col-md-6">
-          <h3>JOIN US NOW</h3>
+          <Link to="sign-up" className="btn btn-success">JOIN US NOW</Link>
         </div>
         <div className="col-md-6">
           <h3>Facebook Login</h3>

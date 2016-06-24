@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router';
 class FbLogin extends Component {
   constructor(props){
     super(props);
@@ -9,6 +9,7 @@ class FbLogin extends Component {
        FBemail:'',
        FBcover:''
      };
+
   }
   //component 生成前
   componentWillMount(){
@@ -18,17 +19,33 @@ class FbLogin extends Component {
         console.log("[FB]檢查登入狀態...");
         if(response.status=='connected'){
           console.log("[FB]已登入");
+        }else{
+          console.log("[FB]未登入");
         }
       });
     };
+    //FB.XFBML.parse(document.querySelector('.container'));
   }
   //component 掛載完成後
   componentDidMount() {
+    FB.init({
+      appId      : '153010411778212',
+      cookie     : true,  // enable cookies to allow the server to access
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v2.5' // use version 2.2
+    });
+    let self = this;
+    FB.getLoginStatus(function(response) {
+      self.onStatusChange(response);
+    });
+
     //監聽是否登出，登入狀態變化
     this.FB.Event.subscribe('auth.logout',
       this.onLogout.bind(this));
     this.FB.Event.subscribe('auth.statusChange',
       this.onStatusChange.bind(this));
+
   }
   //當登入狀態改變
   onStatusChange(response) {
@@ -43,6 +60,14 @@ class FbLogin extends Component {
           self.getPicture();
       });
     }
+  }
+  facebookLogin(){
+    FB.login(function(response) {
+      if (response.authResponse) {
+        //user just authorized your app
+        console.log("Login Success")
+      }
+    }, {scope: 'email,public_profile', return_scopes: true});
   }
   //登出
   logOut(){
@@ -85,16 +110,9 @@ class FbLogin extends Component {
         self.setState({FBcover:response.cover.source});
     });
   }
-  logOut(){
-    let self = this;
-    FB.logout(function(response) {
-      console.log(response,'Person is now logged out');
-      self.setState({FBmessage:'已登出'});
-      self.checkLoginState();
-    });
-  }
   render(){
     return(
+
       <div>
         <div
             className="fb-login-button"
@@ -103,6 +121,8 @@ class FbLogin extends Component {
             data-auto-logout-link={true}
             data-size="large">
         </div>
+        <br/>
+        <button className="btn btn-primary" onClick={()=>{this.facebookLogin()}}>Facebook Login</button>
         <p>{this.state.FBmessage}</p>
         <img src={this.state.FBpicture} />
         <p>{this.state.FBemail}</p>
