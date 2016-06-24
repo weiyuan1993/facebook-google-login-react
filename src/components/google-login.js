@@ -7,37 +7,27 @@ class GoogleLogin extends Component {
        GOOGLEmessage:'未登入',
        GOOGLEemail:'',
        GOOGLEpicture:'',
-       isFirstEnter:true
+
     };
     this.renderGoogleLoginButton=this.renderGoogleLoginButton.bind(this);
 
   }
   componentDidMount(){
-    console.log(this.state.isFirstEnter);
-    if(this.state.isFirstEnter==false){
-        this.renderGoogleLoginButton();
-    }
-    //triggerGoogleLoaded();
     //google載入後觸發render GOOGLE login button
-    window.addEventListener('google-loaded',this.renderGoogleLoginButton);
+    //window.addEventListener('google-loaded',this.renderGoogleLoginButton)
+    this.renderGoogleLoginButton();
 
 
   }
   renderGoogleLoginButton(){
     const onSignIn= (googleUser)=> {
       var profile = googleUser.getBasicProfile();
-      // console.log('[Google+]ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      // console.log('[Google+]Name: ' + profile.getName());
-      // console.log('[Google+]Image URL: ' + profile.getImageUrl());
-      // console.log('[Google+]Email: ' + profile.getEmail());
       this.setState(
       {
         'GOOGLEmessage':'Welcome '+profile.getName(),
         'GOOGLEemail':'Email:'+profile.getEmail(),
-        'GOOGLEpicture':profile.getImageUrl(),
-        'isFirstEnter':false
+        'GOOGLEpicture':profile.getImageUrl()
       });
-
     }
     gapi.signin2.render('googleSignIn', {
       'scope': 'https://www.googleapis.com/auth/plus.login',
