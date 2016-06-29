@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { action_fbLogIn, action_getFbName, action_getFbEmail, action_fbLogOut } from '../actions/index';
+import {
+  action_fbLogIn,
+  action_getFbName,
+  action_getFbEmail,
+  action_getFbCover,
+  action_fbLogOut
+} from '../actions/index';
 
 class FbLogin extends Component {
   constructor(props){
@@ -102,7 +108,6 @@ class FbLogin extends Component {
   getEmail(){
     let self = this;
     FB.api('/me',{fields:'email'}, function(response) {
-        //self.setState({FBemail:'Email:'+response.email});
         self.props.action_getFbEmail(response.email);
     });
   }
@@ -115,7 +120,8 @@ class FbLogin extends Component {
   getCover(){
     let self = this;
     FB.api('/me',{fields:'cover'}, function(response) {
-        self.setState({FBcover:response.cover.source});
+        // self.setState({FBcover:response.cover.source});
+        self.props.action_getFbCover(response.cover.source);
     });
   }
   render(){
@@ -134,7 +140,7 @@ class FbLogin extends Component {
         <p>{this.state.FBmessage} {this.props.fbName}</p>
         <img src={this.state.FBpicture} />
         <p>{this.props.fbEmail}</p>
-        <img src={this.state.FBcover} />
+        <img src={this.props.fbCover} />
         <button className="btn btn-primary" onClick={()=>{this.getEmail()}}>Get email</button>
         <button className="btn btn-primary" onClick={()=>{this.getCover()}}>Get Cover</button>
         <button className="btn btn-danger"  onClick={()=>{this.logOut()}}>Log Out</button>
@@ -155,7 +161,13 @@ function mapStateToProps(state){ //存取rootReducer回傳的state
   return {
     fbIsLogIn:state.FB.isLogIn,
     fbName:state.FB.fbName,
-    fbEmail:state.FB.fbEmail
+    fbEmail:state.FB.fbEmail,
+    fbCover:state.FB.fbCover
   };
 }
-export default connect(mapStateToProps, { action_fbLogIn, action_getFbName, action_getFbEmail, action_fbLogOut })(FbLogin);
+export default connect(mapStateToProps, {
+  action_fbLogIn,
+  action_getFbName,
+  action_getFbEmail,
+  action_getFbCover,
+  action_fbLogOut })(FbLogin);

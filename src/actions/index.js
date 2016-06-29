@@ -29,3 +29,9 @@ export function action_getFbEmail(email){
     payload:email
   }
 }
+export function action_getFbCover(cover){
+  return{
+    type:'FB_COVER',
+    payload:cover
+  }
+}
