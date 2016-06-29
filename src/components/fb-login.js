@@ -5,6 +5,7 @@ import {
   action_fbLogIn,
   action_getFbName,
   action_getFbEmail,
+  action_getFbPicture,
   action_getFbCover,
   action_fbLogOut
 } from '../actions/index';
@@ -14,9 +15,7 @@ class FbLogin extends Component {
     super(props);
     this.FB = props.fb;
     this.state = {
-       FBmessage: '未登入',
-       FBemail:'',
-       FBcover:''
+       FBmessage: '未登入'
      };
   }
   //component 生成前
@@ -59,6 +58,7 @@ class FbLogin extends Component {
     console.log('[FB]' ,response );
 
     let self = this;
+    //onLogin
     if( response.status === "connected" ) {
       const isLogIn = true;
       this.props.action_fbLogIn(isLogIn);
@@ -86,18 +86,15 @@ class FbLogin extends Component {
     let self = this;
     FB.logout(function(response) {
       console.log(response,'Person is now logged out');
-      //self.setState({FBmessage:'已登出'});
-      self.checkLoginState();
+      //self.checkLoginState();
     });
   }
   onLogout(response) {
      this.props.action_fbLogOut();
      this.setState({
-        FBmessage: "已登出",
-        FBemail:'',
-        FBpicture:'',
-        FBcover:''
+        FBmessage: "已登出"
      });
+
   }
   checkLoginState() {
     let self = this;
@@ -114,7 +111,7 @@ class FbLogin extends Component {
   getPicture(){
     let self = this;
     FB.api('/me',{fields:'picture'}, function(response) {
-        self.setState({FBpicture:response.picture.data.url});
+        self.props.action_getFbPicture(response.picture.data.url);
     });
   }
   getCover(){
@@ -126,7 +123,6 @@ class FbLogin extends Component {
   }
   render(){
     return(
-
       <div>
         <div
             className="fb-login-button"
@@ -138,20 +134,14 @@ class FbLogin extends Component {
         <br/>
         <button className="btn btn-primary" onClick={()=>{this.facebookLogin()}}>Facebook Login</button>
         <p>{this.state.FBmessage} {this.props.fbName}</p>
-        <img src={this.state.FBpicture} />
+        <img src={this.props.fbPicture} />
         <p>{this.props.fbEmail}</p>
         <img src={this.props.fbCover} />
         <button className="btn btn-primary" onClick={()=>{this.getEmail()}}>Get email</button>
         <button className="btn btn-primary" onClick={()=>{this.getCover()}}>Get Cover</button>
         <button className="btn btn-danger"  onClick={()=>{this.logOut()}}>Log Out</button>
         <br/>
-        Redux:
         <br/>
-        facebook is login:
-        {this.props.fbIsLogIn}
-        <br/>
-        Name:
-        {this.props.fbName}
       </div>
     );
   }
@@ -162,6 +152,7 @@ function mapStateToProps(state){ //存取rootReducer回傳的state
     fbIsLogIn:state.FB.isLogIn,
     fbName:state.FB.fbName,
     fbEmail:state.FB.fbEmail,
+    fbPicture:state.FB.fbPicture,
     fbCover:state.FB.fbCover
   };
 }
@@ -169,5 +160,6 @@ export default connect(mapStateToProps, {
   action_fbLogIn,
   action_getFbName,
   action_getFbEmail,
+  action_getFbPicture,
   action_getFbCover,
   action_fbLogOut })(FbLogin);

@@ -20,13 +20,19 @@ export function action_getFbName (name){
 export function action_fbLogOut(){
   return{
     type:'FB_LOG_OUT',
-    payload:''
+    payload:null
   }
 }
 export function action_getFbEmail(email){
   return{
     type:'FB_EMAIL',
     payload:email
+  }
+}
+export function action_getFbPicture(picture){
+  return{
+    type:'FB_PICTURE',
+    payload:picture
   }
 }
 export function action_getFbCover(cover){
