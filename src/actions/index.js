@@ -1,4 +1,4 @@
-export function fbLogIn (isLogIn){
+export function action_fbLogIn (isLogIn){
   if(isLogIn){
     return{
       type:'FB_LOG_IN',
@@ -11,9 +11,15 @@ export function fbLogIn (isLogIn){
     };
   }
 }
-export function getFBName (name){
+export function action_getFbName (name){
   return{
     type:'FB_NAME',
     payload:name
   };
+}
+export function action_fbLogOut(){
+  return{
+    type:'FB_LOG_OUT',
+    payload:''
+  }
 }

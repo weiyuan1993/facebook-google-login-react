@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { fbLogIn, getFBName } from '../actions/index';
+import { action_fbLogIn, action_getFbName, action_fbLogOut } from '../actions/index';
 
 class FbLogin extends Component {
   constructor(props){
@@ -26,7 +26,6 @@ class FbLogin extends Component {
         }
       });
     };
-    //FB.XFBML.parse(document.querySelector('.container'));
   }
   //component 掛載完成後
   componentDidMount() {
@@ -56,11 +55,11 @@ class FbLogin extends Component {
     let self = this;
     if( response.status === "connected" ) {
       const isLogIn = true;
-      this.props.fbLogIn(isLogIn);
+      this.props.action_fbLogIn(isLogIn);
 
       this.FB.api('/me', function(response) {
-        self.props.getFBName("Welcome " + response.name);
-        let message = "Welcome " + response.name;
+        self.props.action_getFbName(response.name);//dispatch action_getFbName
+        let message = "Welcome";
           self.setState({
             FBmessage: message
           });
@@ -86,6 +85,7 @@ class FbLogin extends Component {
     });
   }
   onLogout(response) {
+     this.props.action_fbLogOut();
      this.setState({
         FBmessage: "已登出",
         FBemail:'',
@@ -130,8 +130,8 @@ class FbLogin extends Component {
         </div>
         <br/>
         <button className="btn btn-primary" onClick={()=>{this.facebookLogin()}}>Facebook Login</button>
-        <p>{this.state.FBmessage}</p>
-        <p>{this.props.fbName}</p>
+        <p>{this.state.FBmessage} {this.props.fbName}</p>
+
         <img src={this.state.FBpicture} />
         <p>{this.state.FBemail}</p>
         <img src={this.state.FBcover} />
@@ -156,6 +156,6 @@ function mapStateToProps(state){ //存取rootReducer回傳的state
     fbIsLogIn:state.FB.isLogIn,
     fbName:state.FB.fbName,
     fbEmail:state.FB.fbEmail
-   };
+  };
 }
-export default connect(mapStateToProps, { fbLogIn,getFBName })(FbLogin);
+export default connect(mapStateToProps, { action_fbLogIn,action_getFbName,action_fbLogOut })(FbLogin);
