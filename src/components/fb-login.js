@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { action_fbLogIn, action_getFbName, action_fbLogOut } from '../actions/index';
+import { action_fbLogIn, action_getFbName, action_getFbEmail, action_fbLogOut } from '../actions/index';
 
 class FbLogin extends Component {
   constructor(props){
@@ -75,12 +75,12 @@ class FbLogin extends Component {
       }
     }, {scope: 'email,public_profile', return_scopes: true});
   }
-  //登出
+  //登出按鈕
   logOut(){
     let self = this;
     FB.logout(function(response) {
       console.log(response,'Person is now logged out');
-      self.setState({FBmessage:'已登出'});
+      //self.setState({FBmessage:'已登出'});
       self.checkLoginState();
     });
   }
@@ -102,7 +102,8 @@ class FbLogin extends Component {
   getEmail(){
     let self = this;
     FB.api('/me',{fields:'email'}, function(response) {
-        self.setState({FBemail:'Email:'+response.email});
+        //self.setState({FBemail:'Email:'+response.email});
+        self.props.action_getFbEmail(response.email);
     });
   }
   getPicture(){
@@ -131,9 +132,8 @@ class FbLogin extends Component {
         <br/>
         <button className="btn btn-primary" onClick={()=>{this.facebookLogin()}}>Facebook Login</button>
         <p>{this.state.FBmessage} {this.props.fbName}</p>
-
         <img src={this.state.FBpicture} />
-        <p>{this.state.FBemail}</p>
+        <p>{this.props.fbEmail}</p>
         <img src={this.state.FBcover} />
         <button className="btn btn-primary" onClick={()=>{this.getEmail()}}>Get email</button>
         <button className="btn btn-primary" onClick={()=>{this.getCover()}}>Get Cover</button>
@@ -158,4 +158,4 @@ function mapStateToProps(state){ //存取rootReducer回傳的state
     fbEmail:state.FB.fbEmail
   };
 }
-export default connect(mapStateToProps, { action_fbLogIn,action_getFbName,action_fbLogOut })(FbLogin);
+export default connect(mapStateToProps, { action_fbLogIn, action_getFbName, action_getFbEmail, action_fbLogOut })(FbLogin);

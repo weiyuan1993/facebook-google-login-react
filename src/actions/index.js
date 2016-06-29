@@ -23,3 +23,9 @@ export function action_fbLogOut(){
     payload:''
   }
 }
+export function action_getFbEmail(email){
+  return{
+    type:'FB_EMAIL',
+    payload:email
+  }
+}

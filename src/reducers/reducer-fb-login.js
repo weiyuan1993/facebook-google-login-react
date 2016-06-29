@@ -14,6 +14,8 @@ export default function (state = INITIAL_STATE , action){
       return {...state , fbName:action.payload};
     case 'FB_LOG_OUT':
       return {...state , fbName:action.payload};
+    case 'FB_EMAIL':
+      return {...state , fbEmail:action.payload};
     default:
       return state;
   }
