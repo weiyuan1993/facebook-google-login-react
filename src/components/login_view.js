@@ -11,6 +11,7 @@ class LoginView extends Component {
         <h1>Login</h1>
         <div className="col-md-6">
           <Link to="sign-up" className="btn btn-success">JOIN US NOW</Link>
+          <Link to="dashboard" className="btn btn-info">Dashboard</Link>
         </div>
         <div className="col-md-6">
           <h3>Facebook Login</h3>

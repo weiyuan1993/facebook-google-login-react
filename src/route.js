@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 import App from './components/app';
 import LoginView from './components/login_view';
 import SignUpView from './components/signup_view';
-import DashBoardView from './components/dashboard_view';
-import DashBoard from './components/dashboard';
+import DashBoardView from './components/dashboard/dashboard_view';
+import DashBoard from './components/dashboard/dashboard';
 // import Dashboard from './components/dashboard;'
 export default(
   <Route path="/" component={App} >

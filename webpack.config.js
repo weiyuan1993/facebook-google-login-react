@@ -1,28 +1,26 @@
+var path = require('path');
+var webpack = require('webpack');
+
 module.exports = {
+  devtool: 'eval',
   entry: [
-    './src/index.js'
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './src/index'
   ],
   output: {
-    path: __dirname,
-    publicPath: '/',
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
-  devServer: {
-    color:              true,
-    historyApiFallback: true,
-    contentBase:        './',
-    inline:             true,
-    progress:           true,
-    port:               3000
-  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   module: {
     loaders: [{
       test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel',
-      query: {
-        presets: ['es2015', 'react']
-      }
+      loaders: ['react-hot', 'babel'],
+      include: path.join(__dirname, 'src')
     }]
   }
 };
